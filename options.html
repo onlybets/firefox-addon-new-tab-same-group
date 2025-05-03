@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>New Tab Same Group • Settings</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="options.css">
+</head>
+
+<body>
+  <h1>New Tab Same Group</h1>
+
+  <!-- Master toggle -->
+  <div class="card">
+    <div class="label">Enable New Tab Same Group</div>
+    <label class="switch">
+      <input type="checkbox" id="enable">
+      <span class="slider"></span>
+    </label>
+  </div>
+
+  <!-- Placement options -->
+  <div class="card" id="placementCard">
+    <div class="label">Where should new tabs appear?</div>
+
+    <div class="radio-group">
+      <label>
+        <input type="radio" name="placement" value="after" checked>
+        After active tab
+      </label>
+      <label>
+        <input type="radio" name="placement" value="first">
+        At beginning of group
+      </label>
+      <label>
+        <input type="radio" name="placement" value="last">
+        At end of group
+      </label>
+    </div>
+  </div>
+
+  <script src="options.js"></script>
+</body>
+</html>

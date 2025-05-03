@@ -1,0 +1,33 @@
+# macOS system files
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+
+# Thumbnails
+._*
+
+# Spotlight
+.Spotlight-V100
+.Trashes
+
+# macOS metadata
+ehthumbs.db
+Thumbs.db
+
+# Node / web-ext
+node_modules/
+web-ext-artifacts/
+web-ext-config.json
+package-lock.json
+
+# Logs / temp
+*.log
+*.tmp
+
+# Build archives
+*.zip
+*.xpi
+
+# VS Code
+.vscode/
