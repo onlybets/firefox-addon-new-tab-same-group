@@ -21,7 +21,7 @@ This extension only works with **native tab grouping** v138+
 
 ## 📸 Screenshots
 
-1. Options page toggle
+![Options page screenshot](images/new-tab-same-group-capture-1.jpg)
 
 ---
 
