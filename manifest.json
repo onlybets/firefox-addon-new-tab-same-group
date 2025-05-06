@@ -4,7 +4,7 @@
     "version": "1.0.0",
     "description": "Automatically adds new tabs to the same group as the active tab in Firefox.",
     "icons": {
-      "128": "images/new-tab-same-group.png"
+      "128": "images/new-tab-same-group-128.png"
     },
   
     "permissions": ["tabs", "storage"],
@@ -15,7 +15,7 @@
   
     "action": {
       "default_title": "New Tab Same Group",
-      "default_icon": "images/new-tab-same-group.png",
+      "default_icon": "images/new-tab-same-group-128.png",
       "default_popup": "options.html"
     },
   
