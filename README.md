@@ -27,7 +27,7 @@ This extension only works with **native tab grouping** (Firefox 138+).
 
 ## 📸 Screenshots
 
-![Options page screenshot](images/new-tab-same-group-capture-1.jpg)
+![Options page screenshot](images/new-tab-same-group-capture-2.jpg)
 *Screenshot of the options panel, including the new toggle for the standard tab shortcut.*
 
 ---
