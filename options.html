@@ -10,19 +10,16 @@
 <body>
   <h1>New Tab Same Group</h1>
 
-  <!-- Master toggle -->
   <div class="card">
-    <div class="label">Enable New Tab Same Group</div>
+    <div class="label">Enable "New Tab Same Group"</div>
     <label class="switch">
-      <input type="checkbox" id="enable">
+      <input type="checkbox" id="enableGroupTab">
       <span class="slider"></span>
     </label>
   </div>
 
-  <!-- Placement options -->
   <div class="card" id="placementCard">
-    <div class="label">Where should new tabs appear?</div>
-
+    <div class="label">Where to place new tabs?</div>
     <div class="radio-group">
       <label>
         <input type="radio" name="placement" value="after" checked>
@@ -30,13 +27,24 @@
       </label>
       <label>
         <input type="radio" name="placement" value="first">
-        At beginning of group
+        At the beginning of the group
       </label>
       <label>
         <input type="radio" name="placement" value="last">
-        At end of group
+        At the end of the group
       </label>
     </div>
+  </div>
+
+  <div class="card" id="standardShortcutCard">
+    <div class="label">
+      Enable shortcut <kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>T</kbd>
+      <small>To open a standard new tab (ungrouped)</small>
+    </div>
+    <label class="switch">
+      <input type="checkbox" id="enableStandardShortcut">
+      <span class="slider"></span>
+    </label>
   </div>
 
   <script src="options.js"></script>
