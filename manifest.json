@@ -6,7 +6,7 @@
   "icons": {
     "128": "images/new-tab-same-group-128.png"
   },
-  "permissions": ["tabs", "storage", "commands"],
+  "permissions": ["tabs", "storage"],
   "background": {
     "scripts": ["background.js"]
   },
