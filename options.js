@@ -4,6 +4,7 @@ const placementCard = document.getElementById('placementCard');
 const radios = document.querySelectorAll('input[name="placement"]');
 
 const enableStandardShortcutCB = document.getElementById('enableStandardShortcut');
+const editShortcutLink = document.getElementById('editShortcutLink');
 // No need to target standardShortcutCard for now, unless we want to disable it
 // based on another option, which is not the case here.
 
@@ -46,6 +47,17 @@ radios.forEach(radio => {
 // Listener for standard shortcut enable/disable
 enableStandardShortcutCB.addEventListener('change', () => {
   chrome.storage.sync.set({ enableStandardTabShortcut: enableStandardShortcutCB.checked });
+});
+
+// Open Firefox's Manage Extension Shortcuts page
+editShortcutLink.addEventListener('click', (e) => {
+  e.preventDefault();
+  if (chrome.commands && typeof chrome.commands.openShortcutSettings === 'function') {
+    chrome.commands.openShortcutSettings();
+  } else {
+    // Fallback: open about:addons where shortcuts can be managed
+    chrome.tabs.create({ url: 'about:addons' });
+  }
 });
 
 // Function to manage visibility and state of the placement card

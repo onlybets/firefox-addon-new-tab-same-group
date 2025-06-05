@@ -68,6 +68,7 @@ You can customize this shortcut via Firefox's "Manage Extension Shortcuts" menu:
 2. Click the gear icon ⚙️ in the top-right corner.
 3. Select "Manage Extension Shortcuts".
 4. Find "New Tab Same Group" and customize the "Open a standard new tab (not managed by the extension)" shortcut.
+   You can also open this settings page directly from the extension's options by clicking the **Customize shortcut…** link.
 
 ---
 
