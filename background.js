@@ -37,6 +37,32 @@ chrome.storage.onChanged.addListener((changes) => {
 
 // B — Track the last active tab -----------------------------------
 let lastActiveTab = null;
+
+// Initialize lastActiveTab with the current active tab in the last focused window
+chrome.tabs.query({ active: true, lastFocusedWindow: true }).then(tabs => {
+  if (tabs.length > 0) {
+    lastActiveTab = tabs[0];
+  }
+}).catch(e => {
+  console.error('Error initializing active tab:', e);
+});
+
+// Update lastActiveTab whenever the focused window changes
+chrome.windows.onFocusChanged.addListener(async (windowId) => {
+  if (windowId === chrome.windows.WINDOW_ID_NONE) {
+    lastActiveTab = null;
+    return;
+  }
+  try {
+    const [tab] = await chrome.tabs.query({ active: true, windowId });
+    if (tab) {
+      lastActiveTab = tab;
+    }
+  } catch (e) {
+    console.error('onFocusChanged error:', e);
+  }
+});
+
 chrome.tabs.onActivated.addListener(async ({ tabId }) => {
   try {
     lastActiveTab = await chrome.tabs.get(tabId);
