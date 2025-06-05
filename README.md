@@ -3,7 +3,7 @@
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE.txt)
 [![Firefox 138+](https://img.shields.io/badge/firefox-138%2B-orange)](https://addons.mozilla.org/en-US/firefox/addon/new-tab-same-group/)
 [![Get it on AMO](https://img.shields.io/amo/v/new-tab-same-group?label=Get%20on%20AMO)](https://addons.mozilla.org/en-US/firefox/addon/new-tab-same-group/)
-**Version 1.3.0**
+**Version 1.3.1**
 
 **New Tab Same Group** is a Firefox extension that improves tab organization by automatically inserting new tabs into the same group as your current active tab — right after it, at the beginning, or at the end of the group, based on your preference.
 This extension only works with **native tab grouping** (Firefox 138+).
@@ -18,7 +18,7 @@ This extension only works with **native tab grouping** (Firefox 138+).
   - **At the beginning** of the current group
   - **At the end** of the current group
 - ⌨️ **NEW:** Optional keyboard shortcut (`Alt+Shift+T` by default) to open a new tab in the standard Firefox way, without applying grouping logic. This can be toggled in the extension's options.
-- 🧠 Smart tracking of the source tab to ensure consistent behavior
+- 🧠 Smarter tracking of the active tab for reliable grouping across windows
 - 🖤 Fully supports Firefox's native tab groups
 - 🔒 Zero tracking, zero external dependencies
 - 🧩 Works perfectly with both **vertical tab layouts** and **classic horizontal tabs**
