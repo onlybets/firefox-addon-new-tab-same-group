@@ -78,3 +78,12 @@ kbd {
   white-space: nowrap;
   margin: 0 2px;
 }
+
+/* Shortcut settings link */
+#editShortcutLink {
+  color: #4ea1f3;
+  text-decoration: none;
+}
+#editShortcutLink:hover {
+  text-decoration: underline;
+}
