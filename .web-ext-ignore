@@ -1,0 +1,17 @@
+# Inclure explicitement l’icône de l’extension
+# (les autres fichiers du dossier images seront exclus)
+images/*
+!images/new-tab-same-group-128.png
+
+# Ne pas inclure les artefacts de build précédents
+web-ext-artifacts/
+
+# Fichiers non nécessaires à l’exécution
+README.md
+LICENSE.txt
+.gitignore
+
+# Fichiers système ou IDE
+.DS_Store
+.vscode/
+*.log
