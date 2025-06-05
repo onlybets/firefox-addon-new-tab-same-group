@@ -45,7 +45,7 @@ This extension works with both **classic horizontal tabs** and **vertical tabs i
 
 If you don’t see tab groups:
 
-- Open the sidebar via `F1` or View → Sidebar → Tabs
+- Open the sidebar via `F9` or View → Sidebar → Tabs
 - Right-click on a tab and choose **Move Tab to New Group**
 
 ### If tab grouping is missing entirely:
