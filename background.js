@@ -3,7 +3,8 @@
 // ──────────────────────────
 
 // A — Preferences -------------------------------------------------
-let enabled = true;
+// Use 'null' before preferences load to avoid acting on stale defaults.
+let enabled = null;
 let placement = 'after'; // 'after' | 'first' | 'last'
 let enableStandardTabShortcut = true; // New preference for the shortcut
 
