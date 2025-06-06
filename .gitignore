@@ -19,6 +19,7 @@ Thumbs.db
 node_modules/
 web-ext-artifacts/
 web-ext-config.json
+.web-ext-ignore
 package-lock.json
 
 # Logs / temp
@@ -28,8 +29,6 @@ package-lock.json
 # Build archives
 *.zip
 *.xpi
-.web-ext-ignore
-.gitignore
 
 # VS Code
 .vscode/
