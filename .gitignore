@@ -28,6 +28,8 @@ package-lock.json
 # Build archives
 *.zip
 *.xpi
+.web-ext-ignore
+.gitignore
 
 # VS Code
 .vscode/
