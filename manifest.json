@@ -1,37 +1,50 @@
 {
   "manifest_version": 3,
   "name": "New Tab Same Group",
-  "version": "1.5.1",
+  "version": "1.6.1",
   "description": "Automatically adds new tabs to the same group as the active tab in Firefox.",
   "icons": {
     "128": "images/new-tab-same-group-128.png"
   },
+
   "permissions": ["tabs", "storage"],
+
   "background": {
     "scripts": ["background.js"]
   },
+
   "action": {
     "default_title": "New Tab Same Group",
     "default_icon": "images/new-tab-same-group-128.png",
     "default_popup": "options.html"
   },
+
   "options_ui": {
     "page": "options.html",
     "open_in_tab": false
   },
+
   "commands": {
     "open-standard-new-tab": {
       "suggested_key": {
         "default": "Alt+Shift+T",
-        "mac": "Alt+Shift+T"
+        "mac":     "Alt+Shift+T"
       },
-      "description": "Open a standard new tab (not managed by the extension)"
+      "description": "Open a standard new tab (ungrouped)"
+    },
+    "cancel-pending-grouping": {
+      "suggested_key": {
+        "default": "Ctrl+Space",
+        "mac":     "Command+Space"
+      },
+      "description": "Cancel grouping of the most recent tab (1-second window)"
     }
   },
+
   "browser_specific_settings": {
     "gecko": {
       "id": "addon@new-tab-same-group.dev",
-      "strict_min_version": "138.0"
+      "strict_min_version": "135.0"
     }
   }
 }

@@ -3,47 +3,55 @@
 <head>
   <meta charset="utf-8" />
   <title>New Tab Same Group • Settings</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="options.css">
 </head>
 
 <body>
   <h1>New Tab Same Group</h1>
 
+  <!-- Master switch -->
   <div class="card">
-    <div class="label">Enable "New Tab Same Group"</div>
+    <div class="label">Enable “New Tab Same Group”</div>
     <label class="switch">
       <input type="checkbox" id="enableGroupTab">
       <span class="slider"></span>
     </label>
   </div>
 
+  <!-- Placement -->
   <div class="card" id="placementCard">
     <div class="label">Where to place new tabs?</div>
     <div class="radio-group">
-      <label>
-        <input type="radio" name="placement" value="after" checked>
-        After active tab
-      </label>
-      <label>
-        <input type="radio" name="placement" value="first">
-        At the beginning of the group
-      </label>
-      <label>
-        <input type="radio" name="placement" value="last">
-        At the end of the group
-      </label>
+      <label><input type="radio" name="placement" value="after" checked> After active tab</label>
+      <label><input type="radio" name="placement" value="first"> At the beginning of the group</label>
+      <label><input type="radio" name="placement" value="last"> At the end of the group</label>
     </div>
   </div>
 
+  <!-- Standard-new-tab shortcut -->
   <div class="card" id="standardShortcutCard">
     <div class="label">
       Enable shortcut <kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>T</kbd>
-      <small>To open a standard new tab (ungrouped)</small>
-      <small><a href="#" id="editShortcutLink">Customize shortcut…</a></small>
+      <small>Opens a standard, ungrouped new tab.</small>
+      <small><a href="#" class="editShortcut">Customize shortcut…</a></small>
     </div>
     <label class="switch">
       <input type="checkbox" id="enableStandardShortcut">
+      <span class="slider"></span>
+    </label>
+  </div>
+
+  <!-- NEW: delay + cancel -->
+  <div class="card" id="delayCard">
+    <div class="label">
+      Enable 1-second delay with cancel shortcut
+      <small>Default shortcut: <kbd>Ctrl</kbd>+<kbd>Space</kbd> (Windows/Linux) or <kbd>⌘</kbd> + <kbd>Space</kbd> (macOS).</small>
+      <small>During that single second you can press the shortcut to keep the tab where it opened.</small>
+      <small>Outside that window the shortcut is automatically disabled, so Spotlight, scrolling, etc. work as usual.</small>
+      <small><a href="#" class="editShortcut" data-cmd="cancel-pending-grouping">Customize shortcut…</a></small>
+    </div>
+    <label class="switch">
+      <input type="checkbox" id="enableDelay">
       <span class="slider"></span>
     </label>
   </div>

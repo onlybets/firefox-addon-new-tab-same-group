@@ -1,89 +1,38 @@
-/* === Reset & Base === */
-* { box-sizing: border-box; margin: 0; padding: 0; font-family: "Inter", system-ui, sans-serif; }
-body { background: #111218; color: #eef0f5; padding: 20px; min-width: 360px; /* Augmenté pour le nouveau texte */ }
-h1   { font-size: 1.6rem; font-weight: 600; margin-bottom: 24px; text-align: center; }
+/* === Reset & Base ============================================ */
+* { box-sizing:border-box; margin:0; padding:0; font-family:Inter,system-ui,sans-serif; }
+body { background:#111218; color:#eef0f5; padding:20px; min-width:360px; }
+h1   { text-align:center; font-size:1.6rem; font-weight:600; margin-bottom:24px; }
 
-/* === Card === */
+/* === Card ==================================================== */
 .card {
-  background: #252833;
-  border: 1px solid #3a3f54;
-  border-radius: 14px;
-  padding: 20px 24px; /* Ajusté pour un meilleur espacement vertical */
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 12px; /* Un peu plus d'espace entre les cartes */
+  background:#252833; border:1px solid #3a3f54; border-radius:14px;
+  padding:20px 24px; margin-bottom:12px;
+  display:flex; justify-content:space-between; align-items:center;
 }
+.card .label { flex-grow:1; margin-right:16px; }
+.card .label small { display:block; font-size:0.8rem; color:#adb5bd; margin-top:4px; }
 
-.card .label {
-  margin-right: 16px; /* Un peu moins de marge pour laisser plus de place au texte */
-  flex-grow: 1; /* Permet au label de prendre plus de place si nécessaire */
-}
+/* === Toggle ================================================== */
+.switch { position:relative; display:inline-block; width:60px; height:32px; flex-shrink:0; }
+.switch input { opacity:0; width:0; height:0; }
+.slider { position:absolute; inset:0; cursor:pointer; background:#44475a; border-radius:16px; transition:.3s; }
+.slider:before { content:""; position:absolute; height:28px; width:28px; left:2px; bottom:2px;
+                 background:#eef0f5; border-radius:50%; transition:.3s; }
+input:checked + .slider { background:#2ecc71; }
+input:checked + .slider:before { transform:translateX(28px); }
 
-.card .label small {
-  display: block;
-  font-size: 0.8rem;
-  color: #adb5bd; /* Couleur plus douce pour la description */
-  margin-top: 4px;
-}
+/* === Radios ================================================== */
+.radio-group { display:flex; flex-direction:column; gap:10px; margin-left:12px; font-size:0.95rem; }
+.radio-group label { display:flex; align-items:center; }
+.radio-group input { margin-right:8px; vertical-align:middle; }
 
-/* === Toggle === */
-.switch { position: relative; display: inline-block; width: 60px; height: 32px; flex-shrink: 0; /* Empêche le switch de rétrécir */ }
-.switch input { opacity: 0; width: 0; height: 0; }
-.slider { position: absolute; inset: 0; cursor: pointer; background: #44475a; border-radius: 16px; transition: .3s; }
-.slider:before { content: ""; position: absolute; height: 28px; width: 28px; left: 2px; bottom: 2px; background: #eef0f5;
-                 border-radius: 50%; transition: .3s; }
-input:checked + .slider { background: #2ecc71; }
-input:checked + .slider:before { transform: translateX(28px); }
-
-/* === Radio Group === */
-.radio-group {
-  display: flex;
-  flex-direction: column;
-  gap: 10px; /* Augmenté pour une meilleure séparation */
-  margin-left: 12px;
-  font-size: 0.95rem;
-  align-items: flex-start; /* Aligner les radios à gauche */
-}
-
-.radio-group label {
-  display: flex; /* Pour un meilleur alignement vertical du texte avec le bouton radio */
-  align-items: center;
-}
-
-.radio-group input[type="radio"] {
-  margin-right: 8px; /* Un peu plus d'espace */
-  vertical-align: middle;
-  /* Style custom pour les boutons radio si désiré, sinon utilise le style natif */
-}
-
+/* === Disabled state ========================================== */
 #placementCard.disabled,
-#standardShortcutCard.disabled { /* Appliquer aussi aux nouvelles options si elles peuvent être désactivées */
-  opacity: 0.5; /* Un peu plus visible que 0.4 */
-  pointer-events: none;
-}
+#standardShortcutCard.disabled,
+#delayCard.disabled { opacity:0.5; pointer-events:none; }
 
-/* Style pour la balise kbd */
-kbd {
-  background-color: #3e4452;
-  border-radius: 3px;
-  border: 1px solid #505662;
-  box-shadow: 0 1px 1px rgba(0,0,0,0.2), 0 2px 0 0 rgba(255,255,255,0.07) inset;
-  color: #e0e0e0;
-  display: inline-block;
-  font-size: 0.85em;
-  font-weight: 600;
-  line-height: 1;
-  padding: 3px 6px;
-  white-space: nowrap;
-  margin: 0 2px;
-}
-
-/* Shortcut settings link */
-#editShortcutLink {
-  color: #4ea1f3;
-  text-decoration: none;
-}
-#editShortcutLink:hover {
-  text-decoration: underline;
-}
+/* === <kbd> styling & links =================================== */
+kbd { background:#3e4452; border:1px solid #505662; border-radius:3px; color:#e0e0e0;
+      padding:3px 6px; font-size:0.85em; font-weight:600; margin:0 2px; }
+.editShortcut { color:#4ea1f3; text-decoration:none; }
+.editShortcut:hover { text-decoration:underline; }
