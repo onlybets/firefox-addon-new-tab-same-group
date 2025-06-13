@@ -24,8 +24,8 @@
     },
     "cancel-pending-grouping": {
       "suggested_key": {
-        "default": "Ctrl+`",
-        "mac":     "Alt+`"
+        "default": "Ctrl+Shift+U",
+        "mac":     "Alt+Shift+U"
       },
       "description": "Cancel grouping during the 1-second window"
     }

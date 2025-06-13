@@ -42,19 +42,19 @@
   </div>
 
   <!-- Delay + cancel -->
-  <div class="card" id="delayCard">
-    <div class="label">
-      Enable 1-second delay with cancel shortcut
-      <small>Default shortcut: <kbd>Ctrl</kbd>+<kbd>`</kbd> (Windows/Linux) or <kbd>⌥</kbd>+<kbd>`</kbd> (macOS).</small>
-      <small>Use it during that second to keep the tab where it opened.<br>
-             The shortcut is active only during that second, then automatically disabled.</small>
-      <small><a href="#" class="editShortcut" data-cmd="cancel-pending-grouping">Customize shortcut…</a></small>
-    </div>
-    <label class="switch">
-      <input type="checkbox" id="enableDelay">
-      <span class="slider"></span>
-    </label>
+<div class="card" id="delayCard">
+  <div class="label">
+    Enable 1-second delay with cancel shortcut
+    <small>Default shortcut: <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>U</kbd> (Win/Linux) or <kbd>⌥</kbd>+<kbd>Shift</kbd>+<kbd>U</kbd> (macOS).</small>
+    <small>Press it during that second to keep the tab where it opened.<br>
+           The shortcut is active only during that second, then automatically disabled.</small>
+    <small><a href="#" class="editShortcut" data-cmd="cancel-pending-grouping">Customize shortcut…</a></small>
   </div>
+  <label class="switch">
+    <input type="checkbox" id="enableDelay">
+    <span class="slider"></span>
+  </label>
+</div>
 
   <script src="options.js"></script>
 </body>
