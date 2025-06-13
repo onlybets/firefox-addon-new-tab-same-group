@@ -1,17 +1,13 @@
 {
   "manifest_version": 3,
   "name": "New Tab Same Group",
-  "version": "1.6.3",
+  "version": "1.6.4",
   "description": "Automatically adds new tabs to the same group as the active tab in Firefox.",
-  "icons": {
-    "128": "images/new-tab-same-group-128.png"
-  },
+  "icons": { "128": "images/new-tab-same-group-128.png" },
 
   "permissions": ["tabs", "storage"],
 
-  "background": {
-    "scripts": ["background.js"]
-  },
+  "background": { "scripts": ["background.js"] },
 
   "action": {
     "default_title": "New Tab Same Group",
@@ -19,32 +15,23 @@
     "default_popup": "options.html"
   },
 
-  "options_ui": {
-    "page": "options.html",
-    "open_in_tab": false
-  },
+  "options_ui": { "page": "options.html", "open_in_tab": false },
 
   "commands": {
     "open-standard-new-tab": {
-      "suggested_key": {
-        "default": "Alt+Shift+T",
-        "mac":     "Alt+Shift+T"
-      },
+      "suggested_key": { "default": "Alt+Shift+T", "mac": "Alt+Shift+T" },
       "description": "Open a standard new tab (ungrouped)"
     },
     "cancel-pending-grouping": {
       "suggested_key": {
-        "default": "Ctrl+G",
-        "mac":     "Command+G"
+        "default": "Ctrl+`",
+        "mac":     "Alt+`"
       },
-      "description": "Cancel grouping of the most recent tab (1-second window)"
+      "description": "Cancel grouping during the 1-second window"
     }
   },
 
   "browser_specific_settings": {
-    "gecko": {
-      "id": "addon@new-tab-same-group.dev",
-      "strict_min_version": "138.0"
-    }
+    "gecko": { "id": "addon@new-tab-same-group.dev", "strict_min_version": "138.0" }
   }
 }
