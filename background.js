@@ -1,134 +1,138 @@
 // ──────────────────────────────────────────────────────────────
-// New Tab Same Group  •  v1.6.1   (12 Jun 2025)
-//   – 1-second delayed grouping with dynamic shortcut
-//   – Ctrl+Space (Win/Linux) or ⌘ Space (macOS) enabled only
-//     during that second, then released to the OS.
-//   – lastActiveTab refreshed every 5 s for reliability.
-//   – Thanks to Firefox user 17957929 for the insights.
+// New Tab Same Group  •  v1.6.3   (13 Jun 2025)
+//   – One unified logic using previousActiveTab / currentActiveTab
+//     so the 1-second delay works reliably.
+//   – Default cancel shortcut Ctrl+G / ⌘+G, active only during
+//     that second, then released to the OS.
 // ──────────────────────────────────────────────────────────────
 
-/* === Preferences (storage) =================================== */
-let enabled      = true;
-let placement    = 'after';       // after | first | last
-let enableDelay  = false;
-const DELAY_MS   = 1000;
+/* === Preferences ============================================ */
+let enabled = true;
+let placement = 'after';             // after | first | last
+let enableDelay = false;             // 1-second window
+const DELAY_MS = 1000;
 
-chrome.storage.sync.get(
+browser.storage.sync.get(
   { enableGroupTab:true, placementMode:'after', enableDelayGrouping:false },
-  p => { enabled = p.enableGroupTab; placement = p.placementMode; enableDelay = p.enableDelayGrouping; }
+  p => { enabled=p.enableGroupTab; placement=p.placementMode; enableDelay=p.enableDelayGrouping; }
 );
-chrome.storage.onChanged.addListener(ch => {
-  if (ch.enableGroupTab)   enabled   = ch.enableGroupTab.newValue;
-  if (ch.placementMode)    placement = ch.placementMode.newValue;
+browser.storage.onChanged.addListener(ch => {
+  if (ch.enableGroupTab)      enabled     = ch.enableGroupTab.newValue;
+  if (ch.placementMode)       placement   = ch.placementMode.newValue;
   if (ch.enableDelayGrouping) enableDelay = ch.enableDelayGrouping.newValue;
 });
 
-/* === Dynamic shortcut (Ctrl/⌘ Space) ========================= */
-const CMD_NAME = 'cancel-pending-grouping';
-let   userShortcut   = '';   // user-defined in about:addons
-let   activeShortcut = '';   // currently set via commands.update()
+/* === Dynamic shortcut (Ctrl/⌘+G) ============================ */
+const CMD = 'cancel-pending-grouping';
+let userSC='', activeSC='';
 
-async function readUserShortcut() {
+async function readUserSC(){
   const all = await browser.commands.getAll();
-  const cmd = all.find(c => c.name === CMD_NAME);
-  userShortcut = cmd && cmd.shortcut ? cmd.shortcut : '';
+  userSC = (all.find(c=>c.name===CMD)?.shortcut)||'';
 }
-async function defaultShortcut() {
-  const info = await browser.runtime.getPlatformInfo();
-  return info.os === 'mac' ? 'Command+Space' : 'Ctrl+Space';
+async function defSC(){
+  const {os} = await browser.runtime.getPlatformInfo();
+  return os==='mac' ? 'Command+G' : 'Ctrl+G';
 }
-async function enableShortcut() {
-  if (!activeShortcut) {
-    if (!userShortcut) await readUserShortcut();
-    const sc = userShortcut || await defaultShortcut();
-    await browser.commands.update({ name: CMD_NAME, shortcut: sc });
-    activeShortcut = sc;
+async function enableSC(){
+  if (!activeSC){
+    if (!userSC) await readUserSC();
+    const sc = userSC || await defSC();
+    await browser.commands.update({ name:CMD, shortcut:sc });
+    activeSC = sc;
   }
 }
-async function disableShortcut() {
-  if (activeShortcut) {
-    await browser.commands.update({ name: CMD_NAME, shortcut: '' });
-    activeShortcut = '';
+async function disableSC(){
+  if (activeSC){
+    await browser.commands.update({ name:CMD, shortcut:'' });
+    activeSC='';
   }
 }
 
-/* === lastActiveTab tracking (refresh every 5 s) =============== */
-let lastActiveTab = null;
-refreshLastActiveTab();
-setInterval(refreshLastActiveTab, 5000);
+/* === Track active & previous active tabs ==================== */
+let currentActiveTab=null;
+let previousActiveTab=null;
 
-function refreshLastActiveTab() {
-  browser.tabs.query({ active:true, lastFocusedWindow:true })
-    .then(t => { if (t[0]) lastActiveTab = t[0]; })
-    .catch(() => {});
+refreshActive();
+setInterval(refreshActive, 5000);
+
+function refreshActive(){
+  browser.tabs.query({active:true, lastFocusedWindow:true})
+    .then(t=>{ if(t[0]) currentActiveTab=t[0]; })
+    .catch(()=>{});
 }
-browser.windows.onFocusChanged.addListener(refreshLastActiveTab);
-browser.tabs.onActivated.addListener(({ tabId }) =>
-  browser.tabs.get(tabId).then(t => { lastActiveTab = t; }).catch(() => {})
+function updateActive(tab){
+  if(currentActiveTab && currentActiveTab.id!==tab.id)
+    previousActiveTab=currentActiveTab;
+  currentActiveTab=tab;
+}
+browser.windows.onFocusChanged.addListener(refreshActive);
+browser.tabs.onActivated.addListener(({tabId}) =>
+  browser.tabs.get(tabId).then(updateActive).catch(()=>{})
 );
 
-/* === Delayed grouping logic =================================== */
-const pending = new Map();   // tabId → timerID
-browser.commands.onCommand.addListener(cmd => { if (cmd === CMD_NAME) cancelPending(); });
+/* === Delayed grouping ======================================= */
+const pending=new Map();             // tabId → timer
+browser.commands.onCommand.addListener(cmd=>{ if(cmd===CMD) cancelAll(); });
 
-function cancelPending() {
-  for (const t of pending.values()) clearTimeout(t);
+function cancelAll(){
+  for(const t of pending.values()) clearTimeout(t);
   pending.clear();
-  disableShortcut();
+  disableSC();
 }
 
-browser.tabs.onCreated.addListener(async newTab => {
-  if (!enabled || !lastActiveTab) return;
+browser.tabs.onCreated.addListener(async newTab=>{
+  if(!enabled) return;
 
-  if (enableDelay) {
-    await enableShortcut();
-    const timer = setTimeout(() => {
+  // Détermine le bon onglet source
+  let sourceTab = newTab.active ? previousActiveTab : currentActiveTab;
+  if(!sourceTab) return;
+
+  if(enableDelay){
+    await enableSC();
+    const timer=setTimeout(()=>{
       pending.delete(newTab.id);
-      if (!pending.size) disableShortcut();
-      groupTabNow(newTab);
+      if(!pending.size) disableSC();
+      groupTab(newTab, sourceTab);
     }, DELAY_MS);
     pending.set(newTab.id, timer);
-  } else {
-    groupTabNow(newTab);
+  }else{
+    groupTab(newTab, sourceTab);
   }
 });
 
-browser.tabs.onRemoved.addListener(id => {
-  if (pending.has(id)) {
+browser.tabs.onRemoved.addListener(id=>{
+  if(pending.has(id)){
     clearTimeout(pending.get(id));
     pending.delete(id);
-    if (!pending.size) disableShortcut();
+    if(!pending.size) disableSC();
   }
 });
 
-/* === Immediate grouping helper ================================ */
-async function groupTabNow(newTab) {
-  try {
-    const src = lastActiveTab;
-    if (!src || src.groupId === -1 || newTab.windowId !== src.windowId) return;
+/* === Group helper =========================================== */
+async function groupTab(newTab, src){
+  try{
+    if(!src || src.groupId===-1 || newTab.windowId!==src.windowId) return;
 
-    await browser.tabs.group({ groupId: src.groupId, tabIds: [newTab.id] });
+    await browser.tabs.group({ groupId:src.groupId, tabIds:[newTab.id] });
 
-    let target = src.index + 1;
-    let move   = placement !== 'last';
+    let target=src.index+1, move=placement!=='last';
 
-    if (placement === 'first') {
-      const gTabs = await browser.tabs.query({ groupId: src.groupId, windowId: src.windowId });
-      const others = gTabs.filter(t => t.id !== newTab.id).map(t => t.index);
-      target = others.length ? Math.min(...others) : 0;
-    } else if (placement === 'last') {
-      move = false;
+    if(placement==='first'){
+      const g=await browser.tabs.query({groupId:src.groupId, windowId:src.windowId});
+      const others=g.filter(t=>t.id!==newTab.id).map(t=>t.index);
+      target=others.length?Math.min(...others):0;
+    }else if(placement==='last'){ move=false; }
+
+    if(move){
+      const all=await browser.tabs.query({windowId:newTab.windowId});
+      target=Math.max(0,Math.min(target,all.length));
+      await browser.tabs.move(newTab.id,{index:target});
     }
-
-    if (move) {
-      const all = await browser.tabs.query({ windowId: newTab.windowId });
-      target = Math.min(Math.max(target, 0), all.length);
-      await browser.tabs.move(newTab.id, { index: target });
-    }
-  } catch (e) { console.warn('Grouping error:', e.message); }
+  }catch(e){ console.warn('Grouping error',e.message); }
 }
 
-/* === Install/update log ======================================= */
-browser.runtime.onInstalled.addListener(({ reason }) =>
-  console.log('New Tab Same Group installed/updated:', reason)
+/* === Log install/update ===================================== */
+browser.runtime.onInstalled.addListener(({reason})=>
+  console.log('New Tab Same Group updated:', reason)
 );

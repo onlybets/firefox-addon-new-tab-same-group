@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "New Tab Same Group",
-  "version": "1.6.1",
+  "version": "1.6.3",
   "description": "Automatically adds new tabs to the same group as the active tab in Firefox.",
   "icons": {
     "128": "images/new-tab-same-group-128.png"
