@@ -34,8 +34,8 @@
     },
     "cancel-pending-grouping": {
       "suggested_key": {
-        "default": "Ctrl+Space",
-        "mac":     "Command+Space"
+        "default": "Ctrl+G",
+        "mac":     "Command+G"
       },
       "description": "Cancel grouping of the most recent tab (1-second window)"
     }
@@ -44,7 +44,7 @@
   "browser_specific_settings": {
     "gecko": {
       "id": "addon@new-tab-same-group.dev",
-      "strict_min_version": "135.0"
+      "strict_min_version": "138.0"
     }
   }
 }
