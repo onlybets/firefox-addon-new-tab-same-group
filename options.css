@@ -27,12 +27,6 @@ input:checked + .slider:before { transform:translateX(28px); }
 .radio-group input { margin-right:8px; vertical-align:middle; }
 
 /* === Disabled state ========================================== */
-#placementCard.disabled,
-#standardShortcutCard.disabled,
-#delayCard.disabled { opacity:0.5; pointer-events:none; }
+#placementCard.disabled { opacity:0.5; pointer-events:none; }
 
-/* === <kbd> styling & links =================================== */
-kbd { background:#3e4452; border:1px solid #505662; border-radius:3px; color:#e0e0e0;
-      padding:3px 6px; font-size:0.85em; font-weight:600; margin:0 2px; }
-.editShortcut { color:#4ea1f3; text-decoration:none; }
-.editShortcut:hover { text-decoration:underline; }
+
